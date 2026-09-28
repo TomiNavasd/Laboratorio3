@@ -39,4 +39,10 @@ class AppAdapter(
 
     // Pregunta 1: ¿cuántos hay?
     override fun getItemCount() = items.size
+
+    // Permite cambiar la lista que se muestra (la usa aplicarFiltros)
+    fun actualizarLista(nueva: List<App>) {
+        items = nueva
+        notifyDataSetChanged()
+    }
 }
