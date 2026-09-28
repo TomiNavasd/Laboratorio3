@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 class AppAdapter(
     private var items: List<App>,
-    private val onAppClick: (App) -> Unit
+    private val onAppClick: (App) -> Unit,
+    private val onFavoritoClick: (App) -> Unit
 ) : RecyclerView.Adapter<AppAdapter.AppViewHolder>() {
 
     // El ViewHolder sostiene las vistas de UNA fila ya encontradas,
@@ -33,6 +34,7 @@ class AppAdapter(
         holder.tvCategoria.text = app.categoria
         holder.tvEstrella.text = if (app.esFavorita) "★" else "☆"
         holder.itemView.setOnClickListener { onAppClick(app) }
+        holder.tvEstrella.setOnClickListener { onFavoritoClick(app) }
     }
 
     // Pregunta 1: ¿cuántos hay?

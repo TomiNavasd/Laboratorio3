@@ -14,14 +14,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        adapter = AppAdapter(Catalogo.apps) { app ->
-            val intent = Intent(this, DetalleActivity::class.java)
-            intent.putExtra("appId", app.id)
-            startActivity(intent)
-        }
+        adapter = AppAdapter(Catalogo.apps,
+            onAppClick = { app ->
+                val intent = Intent(this, DetalleActivity::class.java)
+                intent.putExtra("appId", app.id)
+                startActivity(intent)
+            },
+            onFavoritoClick = { app ->
+                app.esFavorita = !app.esFavorita
+                adapter.notifyDataSetChanged()
+            })
 
         val rv = findViewById<RecyclerView>(R.id.rvApps)
         rv.layoutManager = LinearLayoutManager(this) // "en columna, de arriba a abajo"
         rv.adapter = adapter
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.notifyDataSetChanged() // "por si algo cambió mientras no miraba"
     }
 }
